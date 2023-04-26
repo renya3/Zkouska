@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+<head>
+    <meta charset="utf-8" />
+        <meta name="description" content="Projekt ke zkoušce - Evidence pojistných událostí" />
+        <meta name="keywords" content="projekt, zkouška, pojištění, Java" />
+        <title>Evidence pojistných událostí</title>
+        <link rel="stylesheet" href="Projekt.css" type="text/css" />
+        <link rel="shortcut icon" href="Projekt/insurance.ico" />
+        <script>
+            class Pojistenec {
+              constructor(jmeno, prijmeni, datumNarozeni, kontakt, druhPojisteni) {
+                this.jmeno = jmeno;
+                this.prijmeni = prijmeni;
+                this.datumNarozeni = datumNarozeni;
+                this.kontakt = kontakt;
+                this.druhPojisteni = druhPojisteni;
+              }
+            }
+      
+            let databaze = [
+              new Pojistenec("Sheldon", "Cooper", "26.02.1980","+420123456789", "Životní pojištění, Úrazové pojištění, Pojištění odpovědnosti, Penzijní pojištění, Pojištění domácnosti, Pojištění majetku"),
+              new Pojistenec("Leonard", "Hofstadter", "30.04.1975", "+420123456790", "Životní pojištění, Pojištění odpovědnosti, Pojištění majetku, Penzijní pojištění, Povinné ručení, Havarijní pojištění, Pojištění internetových rizik"),
+              new Pojistenec("Penelope", "Hofstadter", "02.12.1986", "+420123456791", "Povinné ručení"),
+              new Pojistenec("Amy", "Farrah Fowler", "12.12.1975", "+420123456792", "Životní pojištění, Pojištění odpovědnosti, Penzijní pojištění, Pojištění domácnosti, Pojištění majetku"),
+              new Pojistenec("Howard", "Wolowitz", "09.12.1980", "+420123456793", "Penzijní pojištění, Povinné ručení"),
+              new Pojistenec("Bernadette", "Rostenkowski-Wolowitzová", "23.06.1980", "+420123456794", "Životní pojišení+, Pojištění odpovědnosti, Pojištění domácnosti"),
+              new Pojistenec("Rajesh", "Koothrappali", "30.04.1981", "+420123456795", "Povinné ručení, Pojištění domácnosti"),
+            ];
+      
+            function addUser(form) {
+              databaze.push(
+                new Pojistenec(
+                  form.jmeno.value,
+                  form.prijmeni.value,
+                  form.datumNarozeni.value,
+                  form.kontakt.value,
+                  form.druhPojisteni.value,
+                )
+              );
+              renderUserList();
+            }
+      
+            function renderUserList() {
+              const tbody = document.querySelector("#userList tbody");
+              tbody.innerHTML = "";
+      
+              for (const user of databaze) {
+                const row = document.createElement("tr");
+                [user.jmeno + " " + user.prijmeni, user.datumNarozeni, user.kontakt, user.druhPojisteni].forEach(
+                  (text) => {
+                    const td = document.createElement("td");
+                    td.innerText = text;
+                    row.appendChild(td);
+                  }
+                );
+                tbody.appendChild(row);
+              }
+            }
+      
+            function showPage(pageId) {
+              for (const page of document.querySelectorAll(".page")) {
+                if (page.id == pageId) {
+                  page.classList.remove("hidden");
+                  page.classList.add("active");
+                } else {
+                  page.classList.remove("active");
+                  page.classList.add("hidden");
+                }
+              }
+            }
+          </script>
+        </head>
+        <body>
+            <header>
+                <img src="Projekt/logo.png" alt="Logo pojišťovny" />
+                    <h1><span>Pojišťovna</span></h1>
+                <nav>
+                    <ul>
+                        <li class="aktivni"><a href="projekt.html">Pojištěnci</a></li>
+                        <li><a href="oAplikaci.html">O&nbsp;aplikaci</a></li>
+                        <li><a href="pridat.html">Přidat&nbsp;pojištěnce</a></li>
+                        <li><a class="kontakt-tlacitko" href="kontaktt.html">Kontakt</a></li>
+                    </ul>
+                </nav>
+            </header>
+            <div>
+              <h2>Pojištěnci</h2>
+            <table border="2">
+                <thead>
+                  <tr>
+                    <th>Jméno a příjmení</th>
+                    <th>Datum Narození</th>
+                    <th>Kontakt</th>
+                    <th>Druh Pojištění</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sheldon Cooper</td>
+                        <td>26.02.1980</td>
+                        <td>+420123456789</td>
+                        <td>Životní pojištění, Úrazové pojištění, Pojištění odpovědnosti, Penzijní pojištění, Pojištění domácnosti, Pojištění majetku</td>
+                        <td><button class="kontakt-tlacitko" type="button" value="Smazat" onclick="remove(this.form)">Smazat</button></td>
+                    </tr>
+                    <tr>
+                        <td>Amy Farrah Fowler</td>
+                        <td>12.12.1975</td>
+                        <td>+420123456792</td>
+                        <td>Životní pojištění, Pojištění odpovědnosti, Penzijní pojištění, Pojištění domácnosti, Pojištění majetku</td>
+                        <td><button class="kontakt-tlacitko" type="button" value="Smazat" onclick="remove(this.form)">Smazat</button></td>
+                    </tr>
+                    <tr>
+                        <td>Leonard Hofstadter</td>
+                        <td>30.04.1975</td>
+                        <td>+420123456790</td>
+                        <td>Životní pojištění, Pojištění odpovědnosti, Pojištění majetku, Penzijní pojištění, Povinné ručení, Havarijní pojištění, Pojištění internetových rizik</td>
+                        <td><button class="kontakt-tlacitko" type="button" value="Smazat" onclick="remove(this.form)">Smazat</button></td>
+                    </tr>
+                    <tr>
+                        <td>Penelope Hofstadter</td>
+                        <td>02.12.1986</td>
+                        <td>+420123456791</td>
+                        <td>Povinné ručení</td>
+                        <td><button class="kontakt-tlacitko" type="button" value="Smazat" onclick="remove(this.form)">Smazat</button></td>
+                    </tr>
+                    <tr>
+                        <td>Howard Wolowitz</td>
+                        <td>09.12.1980</td>
+                        <td>+420123456793</td>
+                        <td>Penzijní pojištění, Povinné ručení</td>
+                        <td><button class="kontakt-tlacitko" type="button" value="Smazat" onclick="remove(this.form)">Smazat</button></td>
+                    </tr>
+                    <tr>
+                        <td>Bernadette Rostenkowski-Wolowitzová</td>
+                        <td>23.06.1980</td>
+                        <td>+420123456794</td>
+                        <td>Životní pojišení RODINA, Pojištění odpovědnosti, Pojištění domácnosti</td>
+                        <td><button class="kontakt-tlacitko" type="button" value="Smazat" onclick="remove(this.form)">Smazat</button></td>
+                    </tr>
+                    <tr>
+                        <td>Rajesh Koothrappali</td>
+                        <td>30.04.1981</td>
+                        <td>+420123456795</td>
+                        <td>Povinné ručení, Pojištění domácnosti</td>
+                        <td><button class="kontakt-tlacitko" type="button" value="Smazat" onclick="remove(this.form)">Smazat</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <footer>
+                Vytvořila &copy;Renča 2023 pro <a href="https://itnetwork.cz">itnetwork.cz</a>
+            </footer>
+        </body>
+
+</html>
